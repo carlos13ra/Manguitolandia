@@ -6,13 +6,25 @@
   -webkit-user-select: none;
 }
 
+html,
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
   background: #111;
 }
+
+button {
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+/* =========================
+   JUEGO
+========================= */
 
 #game {
   width: 100%;
@@ -21,189 +33,850 @@ body {
   overflow: hidden;
 }
 
-/* MENÚ */
+
+/* =========================
+   MENÚ
+========================= */
 
 #menu {
   width: 100%;
   height: 100%;
-  background: linear-gradient(#6ec6ff, #dff7ff);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-}
 
-.logo {
-  font-size: 100px;
-  margin-bottom: 10px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      #38bdf8,
+      #8be0ff 55%,
+      #72d572 55%,
+      #45b94b
+    );
 }
 
 #menu h1 {
-  font-size: 35px;
-  color: #3d8b32;
-  text-shadow: 2px 2px white;
+  margin-top: 30px;
+
+  font-size: clamp(30px, 8vw, 60px);
+
+  color: #ffcc00;
+
+  text-shadow:
+    4px 4px 0 #8b5a00,
+    6px 6px 0 #ffffff;
 }
 
 #menu p {
-  font-size: 18px;
-  color: #333;
   margin: 10px 0 30px;
-}
 
-button {
-  border: none;
-  border-radius: 15px;
-  padding: 16px 35px;
   font-size: 20px;
-  font-weight: bold;
-  background: #4caf50;
+
   color: white;
-  box-shadow: 0 5px 0 #28752c;
-}
 
-button:active {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 #28752c;
-}
-
-/* JUEGO */
-
-#gameScreen {
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-#hud {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  z-index: 20;
-  display: flex;
-  justify-content: space-between;
-  font-size: 22px;
-  color: white;
   text-shadow: 2px 2px #333;
 }
 
-#city {
+#playButton,
+#restartButton {
+  padding: 16px 45px;
+
+  border-radius: 18px;
+
+  background: #ff8c00;
+
+  color: white;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 7px 0 #b85e00;
+}
+
+#playButton:active,
+#restartButton:active {
+  transform: translateY(6px);
+
+  box-shadow:
+    0 1px 0 #b85e00;
+}
+
+
+/* =========================
+   MANGUITO DEL MENÚ
+========================= */
+
+.menu-mango {
+  position: relative;
+
+  width: 150px;
+  height: 190px;
+
+  animation: menuBounce 1.2s infinite alternate;
+}
+
+.mango-body {
   position: absolute;
+
+  left: 35px;
+  top: 25px;
+
+  width: 80px;
+  height: 110px;
+
+  background: #ffbf00;
+
+  border-radius: 50% 45% 50% 45%;
+
+  transform: rotate(-10deg);
+
+  border: 5px solid #d68b00;
+}
+
+.mango-eye {
+  position: absolute;
+
+  width: 12px;
+  height: 16px;
+
+  background: #111;
+
+  border-radius: 50%;
+
+  top: 60px;
+
+  z-index: 3;
+}
+
+.eye-left {
+  left: 58px;
+}
+
+.eye-right {
+  left: 88px;
+}
+
+.mango-mouth {
+  position: absolute;
+
+  left: 67px;
+  top: 86px;
+
+  width: 30px;
+  height: 15px;
+
+  border-bottom: 5px solid #111;
+
+  border-radius: 50%;
+
+  z-index: 3;
+}
+
+.arm {
+  position: absolute;
+
+  width: 18px;
+  height: 70px;
+
+  background: #ffbf00;
+
+  border: 4px solid #d68b00;
+
+  border-radius: 20px;
+
+  top: 70px;
+}
+
+.arm-left {
+  left: 25px;
+  transform: rotate(35deg);
+}
+
+.arm-right {
+  right: 22px;
+  transform: rotate(-35deg);
+}
+
+.leg {
+  position: absolute;
+
+  width: 20px;
+  height: 65px;
+
+  background: #ffbf00;
+
+  border: 4px solid #d68b00;
+
+  border-radius: 20px;
+
+  top: 125px;
+}
+
+.leg-left {
+  left: 48px;
+  transform: rotate(15deg);
+}
+
+.leg-right {
+  right: 48px;
+  transform: rotate(-15deg);
+}
+
+@keyframes menuBounce {
+
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-12px);
+  }
+
+}
+
+
+/* =========================
+   PANTALLA DEL JUEGO
+========================= */
+
+#gameScreen {
+  display: none;
+
   width: 100%;
   height: 100%;
-  background: linear-gradient(#65c9ff 0%, #b9ecff 65%, #8bd05c 65%);
+}
+
+#city {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
   overflow: hidden;
+
+  background: #75d7ff;
 }
 
-#sun {
+
+/* =========================
+   CIELO
+========================= */
+
+.sky {
   position: absolute;
-  right: 30px;
-  top: 45px;
-  font-size: 65px;
+
+  width: 100%;
+  height: 65%;
+
+  background:
+    linear-gradient(
+      #35baf4,
+      #a6eaff
+    );
 }
 
-/* EDIFICIOS */
-
-.building {
+.sun {
   position: absolute;
-  bottom: 35%;
-  background: #e8b85b;
-  border: 3px solid #9b6d29;
+
+  right: 8%;
+  top: 8%;
+
+  width: 80px;
+  height: 80px;
+
+  background: #ffe14a;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 35px #fff06a;
 }
 
-.building1 {
-  left: 5%;
-  width: 100px;
-  height: 180px;
-}
 
-.building2 {
-  left: 38%;
-  width: 130px;
-  height: 230px;
-}
+/* =========================
+   NUBES
+========================= */
 
-.building3 {
-  right: 3%;
-  width: 110px;
-  height: 160px;
-}
-
-/* PISO */
-
-#ground {
+.cloud {
   position: absolute;
-  bottom: 0;
+
+  width: 120px;
+  height: 35px;
+
+  background: white;
+
+  border-radius: 40px;
+
+  opacity: .9;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+
+  position: absolute;
+
+  background: white;
+
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 50px;
+  height: 50px;
+
+  left: 20px;
+  bottom: 10px;
+}
+
+.cloud::after {
+  width: 65px;
+  height: 65px;
+
+  right: 20px;
+  bottom: 5px;
+}
+
+.cloud1 {
+  top: 12%;
+  left: 10%;
+}
+
+.cloud2 {
+  top: 25%;
+  left: 55%;
+
+  transform: scale(.7);
+}
+
+.cloud3 {
+  top: 8%;
+  left: 75%;
+
+  transform: scale(.5);
+}
+
+
+/* =========================
+   EDIFICIOS
+========================= */
+
+.buildings {
+  position: absolute;
+
+  bottom: 38%;
+
   width: 100%;
   height: 35%;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #555 0px,
-      #555 50px,
-      #666 50px,
-      #666 100px
-    );
-  border-top: 8px solid #333;
+
+  display: flex;
+
+  align-items: end;
+
+  gap: 8px;
+
+  padding: 0 8px;
 }
 
-/* MANGUITO */
+.building {
+  flex: 1;
+
+  position: relative;
+
+  border: 4px solid #654321;
+
+  border-bottom: none;
+
+  border-radius: 8px 8px 0 0;
+
+  min-width: 55px;
+}
+
+.b1 {
+  height: 70%;
+  background: #ff6b6b;
+}
+
+.b2 {
+  height: 100%;
+  background: #845ec2;
+}
+
+.b3 {
+  height: 78%;
+  background: #00c9a7;
+}
+
+.b4 {
+  height: 90%;
+  background: #ff9671;
+}
+
+.b5 {
+  height: 62%;
+  background: #ffc75f;
+}
+
+
+/* VENTANAS */
+
+.window {
+  width: 18px;
+  height: 25px;
+
+  margin: 12px auto;
+
+  background: #9eeaff;
+
+  border: 3px solid #4d6670;
+
+  box-shadow:
+    0 0 5px #fff;
+}
+
+
+/* =========================
+   CALLE
+========================= */
+
+#street {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+  height: 38%;
+
+  background:
+    linear-gradient(
+      #555,
+      #292929
+    );
+
+  border-top: 10px solid #333;
+}
+
+.road-line {
+  position: absolute;
+
+  width: 90px;
+  height: 9px;
+
+  background: #ffe600;
+
+  top: 58%;
+}
+
+.line1 {
+  left: 5%;
+}
+
+.line2 {
+  left: 35%;
+}
+
+.line3 {
+  left: 65%;
+}
+
+.line4 {
+  left: 95%;
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+#hud {
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+  right: 15px;
+
+  z-index: 50;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: white;
+
+  font-size: 23px;
+
+  text-shadow:
+    2px 2px #222;
+}
+
+
+/* =========================
+   MANGUITO
+========================= */
 
 #player {
   position: absolute;
+
   left: 15%;
+
   bottom: 35%;
-  font-size: 70px;
-  z-index: 10;
-  transform: translateY(50%);
+
+  width: 90px;
+  height: 145px;
+
+  z-index: 20;
+
+  transition:
+    bottom .25s ease-out;
 }
 
-/* OBSTÁCULO */
+
+/* HOJA */
+
+.leaf {
+  position: absolute;
+
+  top: -3px;
+  left: 42px;
+
+  width: 28px;
+  height: 15px;
+
+  background: #39a852;
+
+  border-radius: 100% 0;
+
+  transform: rotate(-25deg);
+}
+
+
+/* CABEZA */
+
+.head {
+  position: absolute;
+
+  left: 15px;
+  top: 12px;
+
+  width: 65px;
+  height: 70px;
+
+  background: #ffbf00;
+
+  border: 4px solid #d68b00;
+
+  border-radius:
+    50% 45% 55% 45%;
+
+  transform: rotate(-8deg);
+}
+
+
+/* OJOS */
+
+.eye {
+  position: absolute;
+
+  top: 23px;
+
+  width: 9px;
+  height: 13px;
+
+  background: #111;
+
+  border-radius: 50%;
+}
+
+.eye1 {
+  left: 18px;
+}
+
+.eye2 {
+  right: 18px;
+}
+
+
+/* BOCA */
+
+.mouth {
+  position: absolute;
+
+  left: 23px;
+  top: 43px;
+
+  width: 20px;
+  height: 10px;
+
+  border-bottom: 4px solid #111;
+
+  border-radius: 50%;
+}
+
+
+/* CUERPO */
+
+.body {
+  position: absolute;
+
+  left: 28px;
+  top: 76px;
+
+  width: 38px;
+  height: 43px;
+
+  background: #ffae00;
+
+  border: 4px solid #d68b00;
+
+  border-radius: 40%;
+}
+
+
+/* BRAZOS */
+
+.player-arm {
+  position: absolute;
+
+  top: 80px;
+
+  width: 15px;
+  height: 55px;
+
+  background: #ffbf00;
+
+  border: 4px solid #d68b00;
+
+  border-radius: 20px;
+
+  transform-origin: top center;
+}
+
+.player-arm-left {
+  left: 17px;
+
+  transform: rotate(45deg);
+
+  animation: armRun .25s infinite alternate;
+}
+
+.player-arm-right {
+  right: 15px;
+
+  transform: rotate(-45deg);
+
+  animation: armRun2 .25s infinite alternate;
+}
+
+
+/* PIERNAS */
+
+.player-leg {
+  position: absolute;
+
+  top: 111px;
+
+  width: 16px;
+  height: 50px;
+
+  background: #ffbf00;
+
+  border: 4px solid #d68b00;
+
+  border-radius: 20px;
+
+  transform-origin: top center;
+}
+
+.player-leg-left {
+  left: 30px;
+
+  animation: legRun .25s infinite alternate;
+}
+
+.player-leg-right {
+  right: 30px;
+
+  animation: legRun2 .25s infinite alternate;
+}
+
+
+@keyframes armRun {
+
+  from {
+    transform: rotate(45deg);
+  }
+
+  to {
+    transform: rotate(-30deg);
+  }
+
+}
+
+@keyframes armRun2 {
+
+  from {
+    transform: rotate(-45deg);
+  }
+
+  to {
+    transform: rotate(30deg);
+  }
+
+}
+
+@keyframes legRun {
+
+  from {
+    transform: rotate(30deg);
+  }
+
+  to {
+    transform: rotate(-30deg);
+  }
+
+}
+
+@keyframes legRun2 {
+
+  from {
+    transform: rotate(-30deg);
+  }
+
+  to {
+    transform: rotate(30deg);
+  }
+
+}
+
+
+/* =========================
+   OBSTÁCULO
+========================= */
 
 #obstacle {
   position: absolute;
-  right: -80px;
+
+  right: -100px;
+
   bottom: 35%;
-  font-size: 55px;
-  z-index: 10;
-  transform: translateY(50%);
+
+  width: 65px;
+  height: 70px;
+
+  z-index: 15;
 }
 
-/* BOTÓN SALTAR */
+.rock-body {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 65px;
+  height: 48px;
+
+  background: #777;
+
+  border: 4px solid #444;
+
+  border-radius:
+    45% 55% 30% 30%;
+}
+
+.rock-top {
+  position: absolute;
+
+  left: 18px;
+  top: 5px;
+
+  width: 30px;
+  height: 30px;
+
+  background: #888;
+
+  border: 4px solid #444;
+
+  transform: rotate(20deg);
+
+  border-radius: 40%;
+}
+
+
+/* =========================
+   BOTÓN
+========================= */
 
 #jumpButton {
   position: absolute;
+
   right: 20px;
   bottom: 25px;
-  z-index: 30;
-  background: #ff9800;
-  box-shadow: 0 5px 0 #b86600;
+
+  z-index: 100;
+
+  padding: 18px 28px;
+
+  border-radius: 20px;
+
+  background: #ff8c00;
+
+  color: white;
+
+  font-size: 19px;
+
+  box-shadow:
+    0 6px 0 #b85e00;
 }
 
-/* GAME OVER */
+#jumpButton:active {
+  transform: translateY(5px);
+
+  box-shadow:
+    0 1px 0 #b85e00;
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
 
 #gameOver {
   display: none;
+
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
+
+  inset: 0;
+
+  z-index: 200;
+
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
   text-align: center;
-  z-index: 100;
+
+  color: white;
+
+  background: rgba(0, 0, 0, .8);
 }
 
 #gameOver h2 {
-  font-size: 40px;
-  margin-bottom: 15px;
+  font-size: 42px;
+
+  color: #ffcc00;
+
+  margin-bottom: 10px;
 }
 
 #gameOver p {
-  font-size: 22px;
+  font-size: 20px;
+
+  margin-bottom: 15px;
+}
+
+#gameOver > div {
+  font-size: 25px;
+
   margin-bottom: 25px;
-      }
+  }
