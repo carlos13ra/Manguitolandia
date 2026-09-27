@@ -10,39 +10,57 @@ const player = document.getElementById("player");
 const obstacle = document.getElementById("obstacle");
 
 const scoreText = document.getElementById("score");
-const finalScore = document.getElementById("finalScore");
 const livesText = document.getElementById("lives");
+const finalScore = document.getElementById("finalScore");
+
+let playing = false;
+let jumping = false;
 
 let score = 0;
 let lives = 3;
-let playing = false;
-let jumping = false;
-let obstacleX = -100;
 
-let gameLoop;
-let scoreLoop;
+let obstacleX = 0;
+let speed = 7;
+
+let animation;
+let scoreTimer;
+
+
+/* =========================
+   INICIAR
+========================= */
 
 function startGame() {
 
   menu.style.display = "none";
+
   gameOver.style.display = "none";
+
   gameScreen.style.display = "block";
 
   score = 0;
-  lives = 3;
-  obstacleX = window.innerWidth + 100;
 
-  scoreText.textContent = score;
-  livesText.textContent = lives;
+  lives = 3;
+
+  speed = 7;
+
+  jumping = false;
 
   playing = true;
 
-  obstacle.style.right = "auto";
+  scoreText.textContent = score;
+
+  livesText.textContent = lives;
+
+  obstacleX = window.innerWidth + 150;
+
   obstacle.style.left = obstacleX + "px";
 
-  gameLoop = requestAnimationFrame(updateGame);
+  player.style.bottom = "35%";
 
-  scoreLoop = setInterval(() => {
+  clearInterval(scoreTimer);
+
+  scoreTimer = setInterval(() => {
 
     if (!playing) return;
 
@@ -50,25 +68,53 @@ function startGame() {
 
     scoreText.textContent = score;
 
+    /* Cada cierto tiempo aumenta la velocidad */
+
+    if (score % 20 === 0) {
+      speed += .5;
+    }
+
   }, 500);
+
+  cancelAnimationFrame(animation);
+
+  animation = requestAnimationFrame(updateGame);
 }
+
+
+/* =========================
+   BUCLE
+========================= */
 
 function updateGame() {
 
   if (!playing) return;
 
-  obstacleX -= 6;
+  obstacleX -= speed;
 
   obstacle.style.left = obstacleX + "px";
 
-  if (obstacleX < -100) {
-    obstacleX = window.innerWidth + Math.random() * 300;
+
+  /* Cuando sale de pantalla */
+
+  if (obstacleX < -120) {
+
+    obstacleX =
+      window.innerWidth +
+      100 +
+      Math.random() * 400;
   }
+
 
   checkCollision();
 
-  gameLoop = requestAnimationFrame(updateGame);
+  animation = requestAnimationFrame(updateGame);
 }
+
+
+/* =========================
+   SALTO
+========================= */
 
 function jump() {
 
@@ -76,83 +122,158 @@ function jump() {
 
   jumping = true;
 
-  player.style.transition = "bottom 0.35s ease-out";
-  player.style.bottom = "55%";
+  player.style.bottom = "58%";
+
 
   setTimeout(() => {
 
-    player.style.transition = "bottom 0.35s ease-in";
     player.style.bottom = "35%";
 
   }, 350);
 
+
   setTimeout(() => {
+
     jumping = false;
+
   }, 700);
 }
+
+
+/* =========================
+   COLISIÓN
+========================= */
 
 function checkCollision() {
 
   if (jumping) return;
 
-  const playerRect = player.getBoundingClientRect();
-  const obstacleRect = obstacle.getBoundingClientRect();
+  const p = player.getBoundingClientRect();
 
-  if (
-    playerRect.right > obstacleRect.left + 15 &&
-    playerRect.left < obstacleRect.right - 15 &&
-    playerRect.bottom > obstacleRect.top + 15
-  ) {
+  const o = obstacle.getBoundingClientRect();
 
-    hitObstacle();
+
+  const collision =
+    p.right > o.left + 15 &&
+    p.left < o.right - 15 &&
+    p.bottom > o.top + 20 &&
+    p.top < o.bottom;
+
+
+  if (collision) {
+
+    loseLife();
+
+    obstacleX =
+      window.innerWidth +
+      250;
   }
 }
 
-function hitObstacle() {
 
-  obstacleX = window.innerWidth + 200;
+/* =========================
+   PERDER VIDA
+========================= */
+
+function loseLife() {
 
   lives--;
 
   livesText.textContent = lives;
 
+
+  /* Pequeña animación */
+
+  player.style.transform = "translateX(-8px)";
+
+  setTimeout(() => {
+
+    player.style.transform = "translateX(8px)";
+
+  }, 70);
+
+  setTimeout(() => {
+
+    player.style.transform = "translateX(0)";
+
+  }, 140);
+
+
   if (lives <= 0) {
+
     endGame();
   }
 }
+
+
+/* =========================
+   GAME OVER
+========================= */
 
 function endGame() {
 
   playing = false;
 
-  cancelAnimationFrame(gameLoop);
-  clearInterval(scoreLoop);
+  cancelAnimationFrame(animation);
+
+  clearInterval(scoreTimer);
 
   finalScore.textContent = score;
 
   gameOver.style.display = "flex";
 }
 
-playButton.addEventListener("click", startGame);
 
-restartButton.addEventListener("click", startGame);
+/* =========================
+   CONTROLES
+========================= */
 
-jumpButton.addEventListener("click", jump);
+playButton.addEventListener(
+  "click",
+  startGame
+);
 
-document.addEventListener("touchstart", function(event) {
+restartButton.addEventListener(
+  "click",
+  startGame
+);
 
-  if (!playing) return;
+jumpButton.addEventListener(
+  "click",
+  jump
+);
 
-  if (event.target === jumpButton) return;
 
-  jump();
+/* TOCAR PANTALLA */
 
-});
+document.addEventListener(
+  "touchstart",
+  function(event) {
 
-document.addEventListener("keydown", function(event) {
+    if (!playing) return;
 
-  if (event.code === "Space" || event.code === "ArrowUp") {
+    if (event.target === jumpButton) return;
+
     jump();
-  }
 
-});
+  }
+);
+
+
+/* TECLADO */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.code === "Space" ||
+      event.code === "ArrowUp"
+    ) {
+
+      jump();
+
+    }
+
+  }
+);
