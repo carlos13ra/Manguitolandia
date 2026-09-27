@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Manguitolandia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+  <div id="game">
+
+    <div id="menu">
+      <div class="logo">🥭</div>
+
+      <h1>MANGUITOLANDIA</h1>
+      <p>La aventura de Manguito</p>
+
+      <button id="playButton">JUGAR</button>
+    </div>
+
+    <div id="gameScreen">
+
+      <div id="hud">
+        <span>❤️ <b id="lives">3</b></span>
+        <span>⭐ <b id="score">0</b></span>
+      </div>
+
+      <div id="city">
+        <div id="sun">☀️</div>
+
+        <div class="building building1"></div>
+        <div class="building building2"></div>
+        <div class="building building3"></div>
+
+        <div id="ground"></div>
+
+        <div id="player">🥭</div>
+
+        <div id="obstacle">🪨</div>
+      </div>
+
+      <button id="jumpButton">SALTAR</button>
+
+    </div>
+
+    <div id="gameOver">
+      <h2>¡GAME OVER!</h2>
+      <p>Puntaje: <span id="finalScore">0</span></p>
+      <button id="restartButton">VOLVER A JUGAR</button>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+
+</body>
+</html>
