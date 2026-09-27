@@ -2,58 +2,155 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <title>Manguitolandia</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div id="game">
+  <main id="game">
 
-    <div id="menu">
-      <div class="logo">🥭</div>
+    <!-- MENÚ -->
+    <section id="menu">
+      <div class="menu-mango">
+        <div class="mango-body"></div>
+        <div class="mango-eye eye-left"></div>
+        <div class="mango-eye eye-right"></div>
+        <div class="mango-mouth"></div>
+        <div class="arm arm-left"></div>
+        <div class="arm arm-right"></div>
+        <div class="leg leg-left"></div>
+        <div class="leg leg-right"></div>
+      </div>
 
-      <h1>MANGUITOLANDIA</h1>
+      <h1>MANGITOLANDIA</h1>
       <p>La aventura de Manguito</p>
 
       <button id="playButton">JUGAR</button>
-    </div>
+    </section>
 
-    <div id="gameScreen">
+
+    <!-- JUEGO -->
+    <section id="gameScreen">
 
       <div id="hud">
-        <span>❤️ <b id="lives">3</b></span>
-        <span>⭐ <b id="score">0</b></span>
+        <div>❤️ <span id="lives">3</span></div>
+        <div>⭐ <span id="score">0</span></div>
       </div>
 
       <div id="city">
-        <div id="sun">☀️</div>
 
-        <div class="building building1"></div>
-        <div class="building building2"></div>
-        <div class="building building3"></div>
+        <div class="sky"></div>
 
-        <div id="ground"></div>
+        <div class="sun"></div>
 
-        <div id="player">🥭</div>
+        <!-- NUBES -->
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
 
-        <div id="obstacle">🪨</div>
+        <!-- CIUDAD -->
+        <div class="buildings">
+
+          <div class="building b1">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="building b2">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="building b3">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="building b4">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="building b5">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+        </div>
+
+        <!-- CALLE -->
+        <div id="street">
+          <div class="road-line line1"></div>
+          <div class="road-line line2"></div>
+          <div class="road-line line3"></div>
+          <div class="road-line line4"></div>
+        </div>
+
+        <!-- MANGUITO -->
+        <div id="player">
+
+          <div class="leaf"></div>
+
+          <div class="head">
+            <div class="eye eye1"></div>
+            <div class="eye eye2"></div>
+            <div class="mouth"></div>
+          </div>
+
+          <div class="body"></div>
+
+          <div class="player-arm player-arm-left"></div>
+          <div class="player-arm player-arm-right"></div>
+
+          <div class="player-leg player-leg-left"></div>
+          <div class="player-leg player-leg-right"></div>
+
+        </div>
+
+        <!-- OBSTÁCULO -->
+        <div id="obstacle">
+          <div class="rock-top"></div>
+          <div class="rock-body"></div>
+        </div>
+
       </div>
 
       <button id="jumpButton">SALTAR</button>
 
-    </div>
+    </section>
 
-    <div id="gameOver">
-      <h2>¡GAME OVER!</h2>
-      <p>Puntaje: <span id="finalScore">0</span></p>
-      <button id="restartButton">VOLVER A JUGAR</button>
-    </div>
 
-  </div>
+    <!-- GAME OVER -->
+    <section id="gameOver">
+
+      <h2>¡MANGUITO!</h2>
+
+      <p>La aventura terminó</p>
+
+      <div>
+        ⭐ <span id="finalScore">0</span>
+      </div>
+
+      <button id="restartButton">
+        VOLVER A JUGAR
+      </button>
+
+    </section>
+
+  </main>
 
   <script src="game.js"></script>
 
 </body>
-</html>
+  </html>
